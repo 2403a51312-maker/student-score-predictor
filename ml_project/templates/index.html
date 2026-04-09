@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Success Predictor</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --bg-color: #f8f9fa;
+      --text: #2b2d42;
+      --card-bg: rgba(255, 255, 255, 0.9);
+    }
+    body { 
+      font-family: 'Inter', 'Segoe UI', sans-serif; 
+      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+      margin: 0; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text);
+    }
+    .container {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 100%; max-width: 600px;
+    }
+    h2 { text-align: center; margin-bottom: 30px; font-weight: 800; color: var(--primary); }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .input-group { display: flex; flex-direction: column; }
+    label { font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; color: #555; }
+    input, select { 
+      padding: 12px; border-radius: 10px; border: 1px solid #ddd;
+      background: #fff; font-size: 1rem; transition: all 0.3s ease;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); }
+    button { 
+      grid-column: span 2;
+      background: var(--primary); color: white; border: none; cursor: pointer; 
+      font-size: 1.1rem; font-weight: bold; padding: 15px; border-radius: 10px;
+      transition: all 0.3s ease; margin-top: 10px;
+    }
+    button:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4); }
+    
+    .result-card {
+      margin-top: 30px; padding: 20px; border-radius: 15px; text-align: center;
+      background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      animation: fadeIn 0.5s ease;
+    }
+    .score-text { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+    .risk-badge { 
+      display: inline-block; padding: 8px 20px; border-radius: 30px; 
+      font-weight: bold; font-size: 1.1rem; text-transform: uppercase;
+    }
+    /* Dynamic risk colors */
+    .risk-critical { background: #ffe3e3; color: #e03131; }
+    .risk-high { background: #fff3bf; color: #f08c00; }
+    .risk-medium { background: #e7f5ff; color: #1971c2; }
+    .risk-low { background: #d3f9d8; color: #2b8a3e; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } button { grid-column: span 1; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🎓 ML Student Predictor</h2>
+    <form action="/predict" method="post" class="form-grid">
+      <div class="input-group">
+        <label>Average Study Hours/Day</label>
+        <input type="number" name="study_hours" step="0.1" required value="4.5">
+      </div>
+      <div class="input-group">
+        <label>Attendance %</label>
+        <input type="number" name="attendance" step="0.1" required value="85">
+      </div>
+      <div class="input-group">
+        <label>Recent Exam Avg (0-100)</label>
+        <input type="number" name="prev_score" step="0.1" required value="75">
+      </div>
+      <div class="input-group">
+        <label>Assignment Completion %</label>
+        <input type="number" name="assignments" step="0.1" required value="90">
+      </div>
+      <div class="input-group">
+        <label>Sleep Quality</label>
+        <select name="sleep">
+          <option value="poor">Poor</option>
+          <option value="average" selected>Average</option>
+          <option value="good">Good</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Stress Level</label>
+        <select name="stress">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <button type="submit">Predict Student Performance</button>
+    </form>
+    
+    {% if prediction_text %}
+    <div class="result-card">
+      <div class="score-text">{{ prediction_text }}</div>
+      <div class="risk-badge risk-{{ risk_class }}">{{ risk_level }}</div>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
