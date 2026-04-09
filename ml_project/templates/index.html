@@ -71,35 +71,35 @@
     <h2>🎓 ML Student Predictor</h2>
     <form action="/predict" method="post" class="form-grid">
       <div class="input-group">
-        <label>Average Study Hours/Day</label>
-        <input type="number" name="study_hours" step="0.1" required value="4.5">
+        <label>Hours Studied/Week</label>
+        <input type="number" name="Hours_Studied" step="1" required value="20">
       </div>
       <div class="input-group">
         <label>Attendance %</label>
-        <input type="number" name="attendance" step="0.1" required value="85">
+        <input type="number" name="Attendance" step="1" required value="85">
       </div>
       <div class="input-group">
-        <label>Recent Exam Avg (0-100)</label>
-        <input type="number" name="prev_score" step="0.1" required value="75">
+        <label>Previous Score (0-100)</label>
+        <input type="number" name="Previous_Scores" step="1" required value="75">
       </div>
       <div class="input-group">
-        <label>Assignment Completion %</label>
-        <input type="number" name="assignments" step="0.1" required value="90">
+        <label>Sleep Hours/Night</label>
+        <input type="number" name="Sleep_Hours" step="1" required value="7">
       </div>
       <div class="input-group">
-        <label>Sleep Quality</label>
-        <select name="sleep">
-          <option value="poor">Poor</option>
-          <option value="average" selected>Average</option>
-          <option value="good">Good</option>
+        <label>Motivation Level</label>
+        <select name="Motivation_Level">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
         </select>
       </div>
       <div class="input-group">
-        <label>Stress Level</label>
-        <select name="stress">
-          <option value="low">Low</option>
-          <option value="medium" selected>Medium</option>
-          <option value="high">High</option>
+        <label>Parental Involvement</label>
+        <select name="Parental_Involvement">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
         </select>
       </div>
       <button type="submit">Predict Student Performance</button>
